@@ -27,6 +27,39 @@
     .container {
       width: 100%;
       max-width: 680px;
+      position: relative;
+    }
+
+    .language-wrap {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 28px;
+    }
+
+    .language-select {
+      appearance: none;
+      -webkit-appearance: none;
+      border: 1px solid #ded8ce;
+      background: rgba(255,255,255,0.55);
+      color: #4d4d4d;
+      font-size: 14px;
+      padding: 10px 34px 10px 14px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-family: inherit;
+      background-image:
+        linear-gradient(45deg, transparent 50%, #777 50%),
+        linear-gradient(135deg, #777 50%, transparent 50%);
+      background-position:
+        calc(100% - 16px) 50%,
+        calc(100% - 11px) 50%;
+      background-size: 5px 5px, 5px 5px;
+      background-repeat: no-repeat;
+    }
+
+    .language-select:focus {
+      outline: 2px solid rgba(36, 36, 36, 0.12);
+      outline-offset: 2px;
     }
 
     .logo {
@@ -113,13 +146,24 @@
 <body>
   <main class="container">
 
+    <div class="language-wrap">
+      <select
+        id="languageSelect"
+        class="language-select"
+        aria-label="Language"
+      >
+        <option value="en">English</option>
+        <option value="tr">Türkçe</option>
+      </select>
+    </div>
+
     <img class="logo" src="logo.png" alt="Nura House logo">
 
     <div class="brand">Nura House</div>
 
-    <h1>Thoughtful ideas, made together.</h1>
+    <h1 id="headline">Thoughtful ideas, made together.</h1>
 
-    <p class="intro">
+    <p class="intro" id="intro">
       Small digital experiences inspired by everyday life,
       connection and the little things that can make life easier.
     </p>
@@ -127,29 +171,29 @@
     <div class="cards">
 
       <a class="card" href="about.html">
-        <div class="card-title">About Us</div>
-        <div class="card-description">
+        <div class="card-title" id="aboutTitle">About Us</div>
+        <div class="card-description" id="aboutDescription">
           The story behind Nura House.
         </div>
       </a>
 
       <a class="card" href="privacy.html">
-        <div class="card-title">Privacy</div>
-        <div class="card-description">
+        <div class="card-title" id="privacyTitle">Privacy</div>
+        <div class="card-description" id="privacyDescription">
           Privacy information for our apps.
         </div>
       </a>
 
       <a class="card" href="terms.html">
-        <div class="card-title">Terms of Use</div>
-        <div class="card-description">
+        <div class="card-title" id="termsTitle">Terms of Use</div>
+        <div class="card-description" id="termsDescription">
           Terms and conditions for our apps.
         </div>
       </a>
 
       <a class="card" href="support.html">
-        <div class="card-title">Contact Support</div>
-        <div class="card-description">
+        <div class="card-title" id="supportTitle">Contact Support</div>
+        <div class="card-description" id="supportDescription">
           Get help, ask a question or send us feedback.
         </div>
       </a>
@@ -158,12 +202,77 @@
 
     <footer>
       © 2026 Nura House<br>
-      Contact:
+      <span id="contactLabel">Contact:</span>
       <a href="mailto:nurahouseapps@gmail.com">
         nurahouseapps@gmail.com
       </a>
     </footer>
 
   </main>
+
+  <script>
+    const translations = {
+      en: {
+        headline: "Thoughtful ideas, made together.",
+        intro: "Small digital experiences inspired by everyday life, connection and the little things that can make life easier.",
+        aboutTitle: "About Us",
+        aboutDescription: "The story behind Nura House.",
+        privacyTitle: "Privacy",
+        privacyDescription: "Privacy information for our apps.",
+        termsTitle: "Terms of Use",
+        termsDescription: "Terms and conditions for our apps.",
+        supportTitle: "Contact Support",
+        supportDescription: "Get help, ask a question or send us feedback.",
+        contactLabel: "Contact:"
+      },
+
+      tr: {
+        headline: "Özenli fikirler, birlikte hayata geçirildi.",
+        intro: "Günlük hayattan, bağ kurmaktan ve hayatı biraz daha kolaylaştırabilecek küçük şeylerden ilham alan dijital deneyimler.",
+        aboutTitle: "Hakkımızda",
+        aboutDescription: "Nura House'un hikâyesi.",
+        privacyTitle: "Gizlilik",
+        privacyDescription: "Uygulamalarımızın gizlilik bilgileri.",
+        termsTitle: "Kullanım Koşulları",
+        termsDescription: "Uygulamalarımız için kullanım şartları ve koşulları.",
+        supportTitle: "Destek",
+        supportDescription: "Yardım alın, soru sorun veya bize geri bildirim gönderin.",
+        contactLabel: "İletişim:"
+      }
+    };
+
+    const languageSelect = document.getElementById("languageSelect");
+
+    function setLanguage(language) {
+      const text = translations[language] || translations.en;
+
+      document.documentElement.lang = language;
+
+      document.getElementById("headline").textContent = text.headline;
+      document.getElementById("intro").textContent = text.intro;
+      document.getElementById("aboutTitle").textContent = text.aboutTitle;
+      document.getElementById("aboutDescription").textContent = text.aboutDescription;
+      document.getElementById("privacyTitle").textContent = text.privacyTitle;
+      document.getElementById("privacyDescription").textContent = text.privacyDescription;
+      document.getElementById("termsTitle").textContent = text.termsTitle;
+      document.getElementById("termsDescription").textContent = text.termsDescription;
+      document.getElementById("supportTitle").textContent = text.supportTitle;
+      document.getElementById("supportDescription").textContent = text.supportDescription;
+      document.getElementById("contactLabel").textContent = text.contactLabel;
+
+      localStorage.setItem("nuraHouseLanguage", language);
+    }
+
+    const savedLanguage =
+      localStorage.getItem("nuraHouseLanguage") || "en";
+
+    languageSelect.value = savedLanguage;
+    setLanguage(savedLanguage);
+
+    languageSelect.addEventListener("change", function () {
+      setLanguage(this.value);
+    });
+  </script>
+
 </body>
 </html>
