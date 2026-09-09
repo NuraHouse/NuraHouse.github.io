@@ -26,9 +26,15 @@
       margin: 0 auto;
     }
 
-    .back {
-      display: inline-block;
+    .top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
       margin-bottom: 34px;
+    }
+
+    .back {
       color: #666;
       text-decoration: none;
       font-size: 15px;
@@ -36,6 +42,27 @@
 
     .back:hover {
       text-decoration: underline;
+    }
+
+    .language-select {
+      appearance: none;
+      -webkit-appearance: none;
+      border: 1px solid #ded8ce;
+      background: rgba(255,255,255,0.55);
+      color: #4d4d4d;
+      font-size: 14px;
+      padding: 10px 34px 10px 14px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-family: inherit;
+      background-image:
+        linear-gradient(45deg, transparent 50%, #777 50%),
+        linear-gradient(135deg, #777 50%, transparent 50%);
+      background-position:
+        calc(100% - 16px) 50%,
+        calc(100% - 11px) 50%;
+      background-size: 5px 5px, 5px 5px;
+      background-repeat: no-repeat;
     }
 
     .logo {
@@ -103,45 +130,56 @@
 <body>
 <main>
 
-  <a class="back" href="index.html">← Nura House</a>
+  <div class="top-row">
+    <a class="back" id="backLink" href="index.html">← Nura House</a>
+
+    <select
+      id="languageSelect"
+      class="language-select"
+      aria-label="Language"
+    >
+      <option value="en">English</option>
+      <option value="tr">Türkçe</option>
+    </select>
+  </div>
 
   <img class="logo" src="logo.png" alt="Nura House logo">
 
   <div class="brand">Nura House</div>
 
-  <h1>About us</h1>
+  <h1 id="pageTitle">About us</h1>
 
-  <p>
+  <p id="paragraph1">
     Nura House is an independent studio founded by a couple who love
     turning everyday ideas into thoughtful digital experiences.
   </p>
 
-  <p>
+  <p id="paragraph2">
     Most of our projects begin with a simple conversation about
     something that could make everyday life a little easier,
-    calmer or more connected. We shape those ideas together 
-    and bring them to life with care.
+    calmer or more connected. We shape those ideas together and
+    bring them to life with care.
   </p>
 
-  <p>
+  <p id="paragraph3">
     Pause Together began with conversations between us about
     understanding each other a little better. Nudge grew from the
     simple idea that reminders should feel helpful, not overwhelming.
   </p>
 
-  <p>
+  <p id="paragraph4">
     We create things inspired by everyday life, connection and the
     little details that can make a meaningful difference.
   </p>
 
-  <div class="signature">
+  <div class="signature" id="signature">
     Made together at Nura House.
   </div>
 
   <hr class="divider">
 
   <div class="contact">
-    Contact:
+    <span id="contactLabel">Contact:</span>
     <a href="mailto:nurahouseapps@gmail.com">
       nurahouseapps@gmail.com
     </a>
@@ -152,5 +190,73 @@
   </footer>
 
 </main>
+
+<script>
+  const translations = {
+    en: {
+      backLink: "← Nura House",
+      pageTitle: "About us",
+      paragraph1:
+        "Nura House is an independent studio founded by a couple who love turning everyday ideas into thoughtful digital experiences.",
+      paragraph2:
+        "Most of our projects begin with a simple conversation about something that could make everyday life a little easier, calmer or more connected. We shape those ideas together and bring them to life with care.",
+      paragraph3:
+        "Pause Together began with conversations between us about understanding each other a little better. Nudge grew from the simple idea that reminders should feel helpful, not overwhelming.",
+      paragraph4:
+        "We create things inspired by everyday life, connection and the little details that can make a meaningful difference.",
+      signature:
+        "Made together at Nura House.",
+      contactLabel:
+        "Contact:"
+    },
+
+    tr: {
+      backLink: "← Nura House",
+      pageTitle: "Hakkımızda",
+      paragraph1:
+        "Nura House, günlük hayattaki fikirleri özenli dijital deneyimlere dönüştürmeyi seven bir çift tarafından kurulmuş bağımsız bir stüdyodur.",
+      paragraph2:
+        "Projelerimizin çoğu, günlük hayatı biraz daha kolay, sakin veya bağlantılı hâle getirebilecek bir şey üzerine yaptığımız basit bir sohbetle başlar. Bu fikirleri birlikte şekillendirir ve özenle hayata geçiririz.",
+      paragraph3:
+        "Pause Together, birbirimizi biraz daha iyi anlamak üzerine yaptığımız konuşmalardan doğdu. Nudge ise hatırlatıcıların bunaltıcı değil, yardımcı hissettirmesi gerektiği fikrinden ortaya çıktı.",
+      paragraph4:
+        "Günlük hayattan, bağ kurmaktan ve anlamlı bir fark yaratabilecek küçük ayrıntılardan ilham alan şeyler üretiyoruz.",
+      signature:
+        "Nura House'ta birlikte üretildi.",
+      contactLabel:
+        "İletişim:"
+    }
+  };
+
+  const languageSelect = document.getElementById("languageSelect");
+
+  function setLanguage(language) {
+    const text = translations[language] || translations.en;
+
+    document.documentElement.lang = language;
+
+    document.getElementById("backLink").textContent = text.backLink;
+    document.getElementById("pageTitle").textContent = text.pageTitle;
+    document.getElementById("paragraph1").textContent = text.paragraph1;
+    document.getElementById("paragraph2").textContent = text.paragraph2;
+    document.getElementById("paragraph3").textContent = text.paragraph3;
+    document.getElementById("paragraph4").textContent = text.paragraph4;
+    document.getElementById("signature").textContent = text.signature;
+    document.getElementById("contactLabel").textContent = text.contactLabel;
+
+    localStorage.setItem("nuraHouseLanguage", language);
+  }
+
+  const savedLanguage =
+    localStorage.getItem("nuraHouseLanguage") || "en";
+
+  languageSelect.value = savedLanguage;
+  setLanguage(savedLanguage);
+
+  languageSelect.addEventListener("change", function () {
+    setLanguage(this.value);
+  });
+</script>
+
 </body>
 </html>
