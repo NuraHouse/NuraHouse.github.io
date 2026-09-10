@@ -190,6 +190,13 @@
         </div>
       </a>
 
+      <a class="card" href="leafie-privacy.html">
+        <div class="card-title" id="leafieTitle">Leafie Privacy</div>
+        <div class="card-description" id="leafieDescription">
+          View the Privacy Policy for Leafie.
+        </div>
+      </a>
+
     </div>
 
     <footer>
@@ -213,6 +220,8 @@
       pauseDescription: "View the Privacy Policy for Pause Together.",
       nudgeTitle: "Nudge Privacy",
       nudgeDescription: "View the Privacy Policy for Nudge.",
+      leafieTitle: "Leafie Privacy",
+      leafieDescription: "View the Privacy Policy for Leafie.",
       contactLabel: "Contact:"
     },
 
@@ -225,6 +234,8 @@
       pauseDescription: "Pause Together gizlilik politikasını görüntüleyin.",
       nudgeTitle: "Nudge Gizlilik",
       nudgeDescription: "Nudge gizlilik politikasını görüntüleyin.",
+      leafieTitle: "Leafie Gizlilik",
+      leafieDescription: "Leafie gizlilik politikasını görüntüleyin.",
       contactLabel: "İletişim:"
     }
   };
@@ -243,6 +254,8 @@
     document.getElementById("pauseDescription").textContent = text.pauseDescription;
     document.getElementById("nudgeTitle").textContent = text.nudgeTitle;
     document.getElementById("nudgeDescription").textContent = text.nudgeDescription;
+    document.getElementById("leafieTitle").textContent = text.leafieTitle;
+    document.getElementById("leafieDescription").textContent = text.leafieDescription;
     document.getElementById("contactLabel").textContent = text.contactLabel;
 
     localStorage.setItem("nuraHouseLanguage", language);
